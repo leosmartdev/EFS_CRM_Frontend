@@ -9,11 +9,10 @@ import {
 
 const initialState = {
     auth: {
-        email: '',
-        idToken: '',
-        localId: '',
-        expiresIn: '',
-        refreshToken: '',
+        access_token: '',
+        token_type: '',
+        expires_in: '',
+        user: null,
     },
     errorMessage: '',
     successMessage: '',
@@ -46,11 +45,10 @@ export function AuthReducer(state = initialState, action) {
             errorMessage: '',
             successMessage: '',
             auth: {
-                email: '',
-                idToken: '',
-                localId: '',
-                expiresIn: '',
-                refreshToken: '',
+                access_token: '',
+                token_type: '',
+                expires_in: '',
+                user: null,
             },
         };
     }

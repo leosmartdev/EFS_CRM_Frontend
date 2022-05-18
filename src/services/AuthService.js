@@ -1,33 +1,51 @@
-import axios from 'axios';
 import swal from "sweetalert";
 import {
     loginConfirmedAction,
     logout,
 } from '../store/actions/AuthActions';
+import Http from '../Http';
 
-export function signUp(email, password) {
+export function signUp(name, email, password, password_confirmation) {
     //axios call
     const postData = {
+        name,
         email,
         password,
-        returnSecureToken: true,
+        password_confirmation
     };
-    return axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
-        postData,
-    );
+    return Http.post('/auth/register', postData);
+    // return () => new Promise((resolve, reject) => {
+    //     Http.post('/auth/register', postData)
+    //         .then((res) => resolve(res.data))
+    //         .catch((err) => {
+    //             const { status, errors } = err.response.data;
+    //             const data = {
+    //                 status,
+    //                 errors,
+    //             };
+    //             return reject(data);
+    //         });
+    // });
 }
 
 export function login(email, password) {
     const postData = {
         email,
-        password,
-        returnSecureToken: true,
+        password
     };
-    return axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
-        postData,
-    );
+    return Http.post('/auth/login', postData);
+    // return () => new Promise((resolve, reject) => {
+    //     Http.post('/auth/login', postData)
+    //         .then((res) => resolve(res.data))
+    //         .catch((err) => {
+    //             const { status, errors } = err.response.data;
+    //             const data = {
+    //                 status,
+    //                 errors,
+    //             };
+    //             return reject(data);
+    //         });
+    // });
 }
 
 export function formatError(errorResponse) {
@@ -38,11 +56,11 @@ export function formatError(errorResponse) {
             break;
         case 'EMAIL_NOT_FOUND':
             //return 'Email not found';
-           swal("Oops", "Email not found", "error",{ button: "Try Again!",});
-           break;
+            swal("Oops", "Email not found", "error", { button: "Try Again!", });
+            break;
         case 'INVALID_PASSWORD':
             //return 'Invalid Password';
-            swal("Oops", "Invalid Password", "error",{ button: "Try Again!",});
+            swal("Oops", "Invalid Password", "error", { button: "Try Again!", });
             break;
         case 'USER_DISABLED':
             return 'User Disabled';
@@ -54,9 +72,10 @@ export function formatError(errorResponse) {
 
 export function saveTokenInLocalStorage(tokenDetails) {
     tokenDetails.expireDate = new Date(
-        new Date().getTime() + tokenDetails.expiresIn * 1000,
+        new Date().getTime() + tokenDetails.expires_in * 1000,
     );
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
+    localStorage.setItem('access_token', JSON.stringify(tokenDetails.access_token));
 }
 
 export function runLogoutTimer(dispatch, timer, history) {

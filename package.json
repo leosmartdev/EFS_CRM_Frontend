@@ -1,7 +1,7 @@
 {
   "name": "zenix",
   "version": "0.1.0",
-  "homepage": "https://zenix.dexignzone.com/react/demo",
+  "homepage": "https://localhost:3000",
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^2.13.1",

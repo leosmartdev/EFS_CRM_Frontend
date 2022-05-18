@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 /// React router dom
-import {  Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 /// Css
 import "./index.css";
@@ -103,6 +103,7 @@ import BootstrapTable from "./components/table/BootstrapTable";
 /// Form
 import Element from "./components/Forms/Element/Element";
 import Wizard from "./components/Forms/Wizard/Wizard";
+import ApplicationForm from "./components/Forms/ApplicationForm/index";
 import SummerNote from "./components/Forms/Summernote/SummerNote";
 import Pickers from "./components/Forms/Pickers/Pickers";
 import jQueryValidation from "./components/Forms/jQueryValidation/jQueryValidation";
@@ -131,18 +132,18 @@ const Markup = () => {
     { url: "coin-details", component: CoinDetails },
     { url: "portofolio", component: Portofolio },
     { url: "market-capital", component: MarketCapital },
-   
-   //themes
-	{ url: "dashboard-light", component: DashboradLight },
-	{ url: "dark-sidebar", component: Theme1 },
-	{ url: "modern-sidebar", component: Theme2 },
-	{ url: "horizontal-sidebar", component: Theme3 },
-	{ url: "compact-sidebar", component: Theme4 },
-	{ url: "icon-hover", component: Theme5 },
-	{ url: "mini-sidebar", component: Theme6 },
-	{ url: "dark-mini", component: Theme7 },
-	{ url: "full-sidebar", component: Theme8 },
-   
+
+    //themes
+    { url: "dashboard-light", component: DashboradLight },
+    { url: "dark-sidebar", component: Theme1 },
+    { url: "modern-sidebar", component: Theme2 },
+    { url: "horizontal-sidebar", component: Theme3 },
+    { url: "compact-sidebar", component: Theme4 },
+    { url: "icon-hover", component: Theme5 },
+    { url: "mini-sidebar", component: Theme6 },
+    { url: "dark-mini", component: Theme7 },
+    { url: "full-sidebar", component: Theme8 },
+
 
     /// Apps
     { url: "app-profile", component: AppProfile },
@@ -154,8 +155,8 @@ const Markup = () => {
 
     /// Chart
     { url: "chart-sparkline", component: SparklineChart },
-   { url: "chart-chartjs", component: ChartJs },
-   { url: "chart-chartist", component: Chartist },
+    { url: "chart-chartjs", component: ChartJs },
+    { url: "chart-chartist", component: Chartist },
     { url: "chart-apexchart", component: ApexChart },
     { url: "chart-rechart", component: RechartJs },
 
@@ -187,11 +188,11 @@ const Markup = () => {
     { url: "map-jqvmap", component: JqvMap },
     { url: "uc-lightgallery", component: Lightgallery },
 
-	///Redux
-	{ url: "todo", component: Todo },
-	//{ url: "redux-form", component: ReduxForm }, 
+    ///Redux
+    { url: "todo", component: Todo },
+    //{ url: "redux-form", component: ReduxForm }, 
     { url: 'form-redux-wizard', component: WizardForm },
-	
+
     /// Widget
     { url: "widget-basic", component: Widget },
 
@@ -206,15 +207,16 @@ const Markup = () => {
     { url: "ecom-customers", component: Customers },
 
     /// Form
-	
+
     { url: "form-element", component: Element },
-   { url: "form-wizard", component: Wizard },
+    { url: "form-wizard", component: Wizard },
+    { url: "application-form", component: ApplicationForm },
     { url: "form-editor-summernote", component: SummerNote },
     { url: "form-pickers", component: Pickers },
     { url: "form-validation-jquery", component: jQueryValidation },
 
     /// table
-	{ url: 'table-filtering', component: FilteringTable },
+    { url: 'table-filtering', component: FilteringTable },
     { url: 'table-sorting', component: SortingTable },
     { url: "table-datatable-basic", component: DataTable },
     { url: "table-bootstrap-basic", component: BootstrapTable },
@@ -234,28 +236,27 @@ const Markup = () => {
   path = path.split("/");
   path = path[path.length - 1];
   let pagePath = path.split("-").includes("page");
-  
-    setTimeout(function(){
-		var btn = document.querySelector("#main-wrapper");
-		var metisMenu = document.querySelector(".metismenu");
-		metisMenu.addEventListener("mouseenter", toggleFunc1);
-		metisMenu.addEventListener("mouseleave", toggleFunc2);
-		function toggleFunc1() {
-			return btn.classList.add("iconhover-toggle");
-		}
-		function toggleFunc2() {
-			return btn.classList.remove("iconhover-toggle");
-		}	
-	}, 200);
-  
-  
+
+  setTimeout(function () {
+    var btn = document.querySelector("#main-wrapper");
+    var metisMenu = document.querySelector(".metismenu");
+    metisMenu.addEventListener("mouseenter", toggleFunc1);
+    metisMenu.addEventListener("mouseleave", toggleFunc2);
+    function toggleFunc1() {
+      return btn.classList.add("iconhover-toggle");
+    }
+    function toggleFunc2() {
+      return btn.classList.remove("iconhover-toggle");
+    }
+  }, 200);
+
+
   return (
     <>
       <div
         id={`${!pagePath ? "main-wrapper" : ""}`}
-        className={`${!pagePath ? "show" : "mh100vh"}  ${
-          menuToggle ? "menu-toggle" : ""
-        }`}
+        className={`${!pagePath ? "show" : "mh100vh"}  ${menuToggle ? "menu-toggle" : ""
+          }`}
       >
         {!pagePath && <Nav />}
 
@@ -279,7 +280,7 @@ const Markup = () => {
         {!pagePath && <Footer />}
       </div>
       <Setting />
-	  <ScrollToTop />
+      <ScrollToTop />
     </>
   );
 };
