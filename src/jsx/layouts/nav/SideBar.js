@@ -203,8 +203,8 @@ class SideBar extends Component {
                 <li><Link className={`${path === "market-capital" ? "mm-active" : ""}`} to="/market-capital">Market Capital</Link></li>
               </ul>
             </li>
-
-            <li className="nav-label">Apps</li>
+          
+            {/* <li className="nav-label">Apps</li>
             <li className={`${app.includes(path) ? "mm-active" : ""}`}>
               <Link className="has-arrow ai-icon" to="#" >
                 <i className="flaticon-077-menu-1"></i>
@@ -744,7 +744,7 @@ class SideBar extends Component {
                   </Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
           </MM>
         </PerfectScrollbar>
       </div>

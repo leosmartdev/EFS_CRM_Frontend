@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect, useDispatch } from 'react-redux';
+import RingLoader from "react-spinners/RingLoader";
 import {
   loadingToggleAction,
   signupAction,
@@ -15,11 +16,16 @@ function Register(props) {
   const [errors, setErrors] = useState(errorsObj);
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   function onSignUp(e) {
     e.preventDefault();
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
     let error = false;
     const errorObj = { ...errorsObj };
     if (name === '') {
@@ -43,9 +49,12 @@ function Register(props) {
       error = true;
     }
     setErrors(errorObj);
-    if (error) return;
+    if (error) {
+      setIsLoading(false);
+      return;
+    }
     dispatch(loadingToggleAction(true));
-    dispatch(signupAction(name, email, password, passwordConfirmation, props.history));
+    dispatch(signupAction(name, email, password, passwordConfirmation, props.history, setIsLoading));
   }
   return (
     <div className="authincation h-100 p-meddle">
@@ -131,7 +140,13 @@ function Register(props) {
                           type="submit"
                           className="btn btn-primary btn-block"
                         >
-                          Sign me up
+                          {isLoading ? (
+                            <>
+                              Signing me up ... <RingLoader color="#ffffff" size={20} />
+                            </>
+                          ) : (
+                            "Sign me up"
+                          )}
                         </button>
                       </div>
                     </form>

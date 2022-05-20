@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
+import ClipLoader from "react-spinners/ClipLoader";
 import {
   loadingToggleAction, loginAction,
 } from '../../store/actions/AuthActions';
@@ -13,14 +14,19 @@ import login from "../../images/bg-login2.png";
 import loginbg from "../../images/bg-login.jpg";
 
 function Login(props) {
-  const [email, setEmail] = useState('demo@example.com');
+  const [email, setEmail] = useState('');
   let errorsObj = { email: '', password: '' };
   const [errors, setErrors] = useState(errorsObj);
-  const [password, setPassword] = useState('123456');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   function onLogin(e) {
     e.preventDefault();
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
     let error = false;
     const errorObj = { ...errorsObj };
     if (email === '') {
@@ -33,10 +39,11 @@ function Login(props) {
     }
     setErrors(errorObj);
     if (error) {
+      setIsLoading(false);
       return;
     }
     dispatch(loadingToggleAction(true));
-    dispatch(loginAction(email, password, props.history));
+    dispatch(loginAction(email, password, props.history, setIsLoading));
   }
 
   return (
@@ -127,7 +134,13 @@ function Login(props) {
                             type="submit"
                             className="btn btn-primary btn-block"
                           >
-                            Sign In
+                            {isLoading ? (
+                              <>
+                                Signing In ... <ClipLoader color="#ffffff" size={15} />
+                              </>
+                            ) : (
+                              "Sign In"
+                            )}
                           </button>
                         </div>
                       </form>

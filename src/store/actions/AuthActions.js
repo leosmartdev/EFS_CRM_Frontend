@@ -15,11 +15,12 @@ export const LOGIN_FAILED_ACTION = '[login action] failed login';
 export const LOADING_TOGGLE_ACTION = '[Loading action] toggle loading';
 export const LOGOUT_ACTION = '[Logout action] logout action';
 
-export function signupAction(name, email, password, password_confirmation, history) {
+export function signupAction(name, email, password, password_confirmation, history, setIsLoading) {
     return (dispatch) => {
         signUp(name, email, password, password_confirmation)
             .then((response) => {
                 dispatch(confirmedSignupAction(response.data));
+                setIsLoading(false);
                 history.push('/login');
             })
             .catch((err) => {
@@ -31,6 +32,7 @@ export function signupAction(name, email, password, password_confirmation, histo
                 };
                 // const errorMessage = formatError(error.response.data);
                 swal("Oops", response.message, "error");
+                setIsLoading(false);
                 dispatch(signupFailedAction(response.message));
             });
     };
@@ -44,11 +46,10 @@ export function logout(history) {
     };
 }
 
-export function loginAction(email, password, history) {
+export function loginAction(email, password, history, setIsLoading) {
     return (dispatch) => {
         login(email, password)
             .then((response) => {
-                console.log(response.data);
                 saveTokenInLocalStorage(response.data);
                 runLogoutTimer(
                     dispatch,
@@ -56,7 +57,8 @@ export function loginAction(email, password, history) {
                     history,
                 );
                 dispatch(loginConfirmedAction(response.data));
-                history.push('/dashboard');
+                setIsLoading(false);
+                history.push('/application-form');
             })
             .catch((err) => {
                 console.log(err.response.data);
@@ -66,6 +68,7 @@ export function loginAction(email, password, history) {
                     message: errors.join(' '),
                 };
                 swal("Oops", response.message, "error");
+                setIsLoading(false);
                 dispatch(loginFailedAction(response.message));
             });
     };
